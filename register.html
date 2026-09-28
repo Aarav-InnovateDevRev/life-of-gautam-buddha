@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest Registration – Life of Gautam Buddha</title>
+  <style>
+    :root {
+      --saffron: #e67e22;
+      --saffron-dark: #d35400;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e9ecef;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+    h1 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .subtitle {
+      text-align: center;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      font-size: 1rem;
+      margin-bottom: 18px;
+      outline: none;
+      transition: 0.2s;
+    }
+    input:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover { opacity: 0.95; transform: translateY(-1px); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 18px;
+      display: none;
+      font-size: 0.9rem;
+    }
+    .success-card { display: none; text-align: center; }
+    .success-card h2 { color: #16a34a; margin-bottom: 8px; }
+    .reg-id {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 14px 0;
+      color: var(--saffron-dark);
+      letter-spacing: 1px;
+    }
+    .qr-box {
+      background: white;
+      padding: 16px;
+      border-radius: 14px;
+      display: inline-block;
+      margin: 16px 0;
+      border: 1px solid var(--border);
+    }
+    .qr-box img { width: 200px; height: 200px; display: block; }
+    .download-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 28px;
+      background: #16a34a;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 24px;
+      color: var(--saffron-dark);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="formCard">
+    <h1>Guest Registration</h1>
+    <p class="subtitle">Life of Gautam Buddha</p>
+
+    <div class="error" id="errorMsg"></div>
+
+    <form id="regForm">
+      <label>Full Name</label>
+      <input type="text" id="fullName" placeholder="Enter your full name" required>
+
+      <label>Email</label>
+      <input type="email" id="email" placeholder="your@email.com" required>
+
+      <label>Phone</label>
+      <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+
+      <label>Invite Code</label>
+      <input type="text" id="inviteCode" placeholder="Enter invite code" required>
+
+      <button type="submit" id="submitBtn">Register & Get QR</button>
+    </form>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+  <div class="card success-card" id="successCard">
+    <h2>Registration Successful!</h2>
+    <p>Welcome, <span id="guestName"></span></p>
+    <div class="reg-id" id="regID"></div>
+    
+    <div class="qr-box">
+      <img id="qrImage" src="" alt="QR Code">
+    </div>
+    
+    <a id="downloadBtn" class="download-btn" href="#" download="My-QR-Code.png">Download QR Code</a>
+    
+    <p class="note">
+      Please save or screenshot this QR code.<br>
+      Show it at the gate for entry.
+    </p>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyJpZ5xW3Yo25qMCDkuwmq-80iYL2MEivuubt8XvUtIykPDjScmXWAYhO0x4P4caa9X/exec";
+
+    document.getElementById("regForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      const btn = document.getElementById("submitBtn");
+      const errorDiv = document.getElementById("errorMsg");
+      
+      btn.disabled = true;
+      btn.textContent = "Registering...";
+      errorDiv.style.display = "none";
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const inviteCode = document.getElementById("inviteCode").value.trim();
+
+      try {
+        const url = `${API_URL}?action=register&fullName=${encodeURIComponent(fullName)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&inviteCode=${encodeURIComponent(inviteCode)}`;
+        const res = await fetch(url);
+        const result = await res.json();
+
+        if (result.success) {
+          document.getElementById("formCard").style.display = "none";
+          document.getElementById("successCard").style.display = "block";
+          
+          document.getElementById("guestName").textContent = result.fullName;
+          document.getElementById("regID").textContent = result.registrationID;
+          document.getElementById("qrImage").src = result.qrUrl;
+          document.getElementById("downloadBtn").href = result.qrUrl;
+        } else {
+          errorDiv.textContent = result.message;
+          errorDiv.style.display = "block";
+          btn.disabled = false;
+          btn.textContent = "Register & Get QR";
+        }
+      } catch (err) {
+        errorDiv.textContent = "Network error. Please try again.";
+        errorDiv.style.display = "block";
+        btn.disabled = false;
+        btn.textContent = "Register & Get QR";
+      }
+    });
+  </script>
+</body>
+</html>

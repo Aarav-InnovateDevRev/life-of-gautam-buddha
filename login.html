@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authenticate – Life of Gautam Buddha</title>
+  <style>
+    :root {
+      --saffron: #e67e22;
+      --saffron-dark: #d35400;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e9ecef;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--text-light);
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      font-size: 1rem;
+      margin-bottom: 18px;
+      outline: none;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    input:focus {
+      border-color: var(--saffron);
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.95; }
+    .error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      display: none;
+      font-size: 0.9rem;
+    }
+    .back-link {
+      display: block;
+      margin-top: 24px;
+      color: var(--saffron-dark);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">G</div>
+    <h1>Guard Authentication</h1>
+    <p class="subtitle">Enter the passcode to access scanner & live lists</p>
+
+    <div class="error" id="errorMsg"></div>
+
+    <input type="password" id="passcode" placeholder="Enter Guard Passcode" autofocus>
+    <button onclick="login()">Unlock</button>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyJpZ5xW3Yo25qMCDkuwmq-80iYL2MEivuubt8XvUtIykPDjScmXWAYhO0x4P4caa9X/exec";
+
+    async function login() {
+      const pass = document.getElementById("passcode").value.trim();
+      const errorDiv = document.getElementById("errorMsg");
+      errorDiv.style.display = "none";
+
+      if (!pass) {
+        errorDiv.textContent = "Please enter the passcode";
+        errorDiv.style.display = "block";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}?action=verifyPasscode&passcode=${encodeURIComponent(pass)}`);
+        const result = await res.json();
+
+        if (result.success) {
+          // Save authentication for this browser session
+          sessionStorage.setItem("guardAuthenticated", "true");
+          window.location.href = "guard.html";
+        } else {
+          errorDiv.textContent = result.message || "Incorrect passcode";
+          errorDiv.style.display = "block";
+        }
+      } catch (err) {
+        errorDiv.textContent = "Connection error. Please try again.";
+        errorDiv.style.display = "block";
+      }
+    }
+
+    // Allow Enter key
+    document.getElementById("passcode").addEventListener("keyup", function(e) {
+      if (e.key === "Enter") login();
+    });
+  </script>
+</body>
+</html>

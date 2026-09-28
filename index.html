@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life of Gautam Buddha</title>
+  <style>
+    :root {
+      --saffron: #e67e22;
+      --saffron-dark: #d35400;
+      --saffron-light: #f39c12;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e9ecef;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('buddha-bg.jpg');  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.08;          
+  z-index: -1;
+  pointer-events: none;
+}
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      background: #fff5eb;
+      color: var(--saffron-dark);
+    }
+
+    .nav-links a.active {
+      background: #fff5eb;
+      color: var(--saffron-dark);
+    }
+
+    .btn-auth {
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      color: white !important;
+      padding: 9px 20px !important;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      box-shadow: 0 4px 12px rgba(230, 126, 34, 0.25);
+    }
+
+    .btn-auth:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(230, 126, 34, 0.35);
+      background: linear-gradient(135deg, var(--saffron-light), var(--saffron)) !important;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #fff5eb;
+      color: var(--saffron-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+
+    /* ===== STATS CARD ===== */
+    .stats-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 36px 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      display: inline-block;
+      min-width: 280px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--saffron), var(--saffron-light));
+    }
+
+    .stats-label {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stats-number {
+      font-size: 3.4rem;
+      font-weight: 800;
+      color: var(--saffron-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stats-sub {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .refresh-info {
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: #adb5bd;
+    }
+
+    /* ===== ACTIONS ===== */
+    .actions {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      color: white;
+      box-shadow: 0 6px 20px rgba(230, 126, 34, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+    }
+
+    .btn-outline {
+      background: white;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--saffron);
+      color: var(--saffron-dark);
+      background: #fffaf5;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-top: 60px;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 0 16px;
+        height: 62px;
+      }
+      .nav-links a {
+        padding: 7px 12px;
+        font-size: 0.9rem;
+      }
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+      .hero {
+        padding: 40px 20px 30px;
+      }
+      .stats-number {
+        font-size: 2.8rem;
+      }
+      .logo span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">B</div>
+      <span>Life of Gautam Buddha</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="details.html">Event Details</a>
+      <a href="login.html" class="btn-auth">Authenticate</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Salwan Public School • Rajendra Nagar</div>
+    <h1>Life of Gautam Buddha</h1>
+    <p>Welcome to the official guest portal. Register to receive your entry QR code.</p>
+
+    <!-- TOTAL REGISTERED CARD -->
+    <div class="stats-card">
+      <div class="stats-label">Total Registered</div>
+      <div class="stats-number" id="totalRegistered">—</div>
+      <div class="stats-sub">Guests registered so far</div>
+      <div class="refresh-info">Auto-refreshes every 1 minute</div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+      <a href="register.html" class="btn btn-primary">
+        Guest Registration
+      </a>
+      <a href="details.html" class="btn btn-outline">
+        Event Details
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Salwan Public School, Rajendra Nagar<br>
+    Life of Gautam Buddha • Guest Registration System
+  </footer>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyJpZ5xW3Yo25qMCDkuwmq-80iYL2MEivuubt8XvUtIykPDjScmXWAYhO0x4P4caa9X/exec";
+
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API_URL}?action=getStats`);
+        const data = await res.json();
+        
+        if (data.success) {
+          document.getElementById("totalRegistered").textContent = data.totalRegistered;
+        }
+      } catch (err) {
+        document.getElementById("totalRegistered").textContent = "—";
+      }
+    }
+
+    // Load immediately
+    loadStats();
+
+    // Auto refresh every 60 seconds
+    setInterval(loadStats, 60000);
+  </script>
+</body>
+</html>
