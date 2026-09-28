@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guard Panel – Life of Gautam Buddha</title>
+  <style>
+    :root {
+      --saffron: #e67e22;
+      --saffron-dark: #d35400;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e9ecef;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .navbar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      color: white;
+    }
+    .btn-outline {
+      background: white;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+    }
+    .btn-danger {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1 { font-size: 1.6rem; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-card .number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--saffron-dark);
+    }
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: white;
+      border: 1.5px solid var(--border);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .tab.active {
+      background: #fff5eb;
+      border-color: var(--saffron);
+      color: var(--saffron-dark);
+    }
+    .table-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th {
+      text-align: left;
+      padding: 14px 16px;
+      background: #f8f9fa;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    td {
+      padding: 13px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: var(--text-light);
+    }
+    @media (max-width: 600px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      td, th { padding: 10px 12px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">Life of Gautam Buddha</a>
+    <div style="display:flex; gap:10px;">
+      <a href="scanner.html" class="btn btn-primary">Open Scanner</a>
+      <button onclick="logout()" class="btn btn-danger">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="header">
+      <h1>Guard Panel</h1>
+      <div style="font-size:0.9rem; color:var(--text-light);">Auto-refreshes every 60 seconds</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number" id="totalRegistered">—</div>
+        <div class="label">Total Registered</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" id="totalCheckedIn">—</div>
+        <div class="label">Checked In</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" id="totalPending">—</div>
+        <div class="label">Pending</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('checkedin')">Checked In</div>
+      <div class="tab" onclick="showTab('pending')">Pending</div>
+    </div>
+
+    <!-- CHECKED IN TABLE -->
+    <div class="table-card" id="checkedinTable">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Gate</th>
+            <th>Time</th>
+            <th>Guard</th>
+          </tr>
+        </thead>
+        <tbody id="checkedinBody">
+          <tr><td colspan="5" class="empty">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PENDING TABLE -->
+    <div class="table-card" id="pendingTable" style="display:none;">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Phone</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody id="pendingBody">
+          <tr><td colspan="4" class="empty">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyJpZ5xW3Yo25qMCDkuwmq-80iYL2MEivuubt8XvUtIykPDjScmXWAYhO0x4P4caa9X/exec";
+
+    // Protect the page
+    if (sessionStorage.getItem("guardAuthenticated") !== "true") {
+      window.location.href = "login.html";
+    }
+
+    function logout() {
+      sessionStorage.removeItem("guardAuthenticated");
+      window.location.href = "index.html";
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+
+      document.getElementById('checkedinTable').style.display = tab === 'checkedin' ? 'block' : 'none';
+      document.getElementById('pendingTable').style.display = tab === 'pending' ? 'block' : 'none';
+    }
+
+    async function loadData() {
+      try {
+        // Stats
+        const statsRes = await fetch(`${API_URL}?action=getStats`);
+        const stats = await statsRes.json();
+        if (stats.success) {
+          document.getElementById('totalRegistered').textContent = stats.totalRegistered;
+          document.getElementById('totalCheckedIn').textContent = stats.totalCheckedIn;
+          document.getElementById('totalPending').textContent = stats.totalPending;
+        }
+
+        // Checked In list
+        const checkedRes = await fetch(`${API_URL}?action=getCheckedIn`);
+        const checked = await checkedRes.json();
+        const checkedBody = document.getElementById('checkedinBody');
+        
+        if (checked.success && checked.data.length > 0) {
+          checkedBody.innerHTML = checked.data.map(g => `
+            <tr>
+              <td>${g.name}</td>
+              <td>${g.id}</td>
+              <td>Gate ${g.gate}</td>
+              <td>${g.time}</td>
+              <td>${g.guard}</td>
+            </tr>
+          `).join('');
+        } else {
+          checkedBody.innerHTML = `<tr><td colspan="5" class="empty">No one checked in yet</td></tr>`;
+        }
+
+        // Pending list
+        const pendingRes = await fetch(`${API_URL}?action=getPending`);
+        const pending = await pendingRes.json();
+        const pendingBody = document.getElementById('pendingBody');
+        
+        if (pending.success && pending.data.length > 0) {
+          pendingBody.innerHTML = pending.data.map(g => `
+            <tr>
+              <td>${g.name}</td>
+              <td>${g.id}</td>
+              <td>${g.phone}</td>
+              <td>${g.email}</td>
+            </tr>
+          `).join('');
+        } else {
+          pendingBody.innerHTML = `<tr><td colspan="4" class="empty">No pending guests</td></tr>`;
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadData();
+    setInterval(loadData, 60000); // refresh every 1 minute
+  </script>
+</body>
+</html>
