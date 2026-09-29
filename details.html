@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Details – Life of Gautam Buddha</title>
+  <style>
+    :root {
+      --saffron: #e67e22;
+      --saffron-dark: #d35400;
+      --bg: #f8f9fa;
+      --card: #ffffff;
+      --text: #2c3e50;
+      --text-light: #7f8c8d;
+      --border: #e9ecef;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+
+    .logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--saffron), var(--saffron-dark));
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.93rem;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: #fff5eb;
+      color: var(--saffron-dark);
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #fff8f0, #fff5eb);
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid #f0e6d8;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: white;
+      color: var(--saffron-dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      border: 1px solid #f0d9b5;
+    }
+
+    .hero h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .hero .meta {
+      color: var(--text-light);
+      font-size: 1.05rem;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 36px 20px 50px;
+    }
+
+    .section {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 28px 26px;
+      margin-bottom: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.03);
+    }
+
+    .section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+      color: var(--saffron-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section p {
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .section ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+
+    .section li {
+      margin-bottom: 6px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .info-item {
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+
+    .info-item .label {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .info-item .value {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .highlight {
+      background: #fff8f0;
+      border-left: 4px solid var(--saffron);
+      padding: 14px 18px;
+      border-radius: 0 10px 10px 0;
+      margin: 16px 0;
+      font-size: 0.98rem;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--saffron-dark);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.7rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .nav-links a { padding: 7px 10px; font-size: 0.88rem; }
+      .section { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">B</div>
+      <span>Life of Gautam Buddha</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="details.html" class="active">Event Details</a>
+      <a href="login.html">Authenticate</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">Theatre World Production</div>
+    <h1>Life of Gautam Buddha</h1>
+    <p class="meta">A musical theatrical experience • 8 October 2026</p>
+  </section>
+
+  <div class="container">
+
+    <!-- KEY DETAILS -->
+    <div class="section">
+      <h2>Event Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Date</div>
+          <div class="value">8 October 2026</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Time</div>
+          <div class="value">5:30 PM onwards</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Venue</div>
+          <div class="value">Kamani Auditorium</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Location</div>
+          <div class="value">1, Copernicus Marg, Mandi House, New Delhi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT THE SHOW -->
+    <div class="section">
+      <h2>About the Show</h2>
+      <p>
+        <strong>Life of Gautam Buddha</strong> is a powerful musical theatrical production created by Theatre World. 
+        Written and directed by renowned theatre personalities <strong>Lushin Dubey</strong> and <strong>Bubbles Sabharwal</strong>, 
+        the show brings to life the extraordinary journey of Prince Siddhartha — from a life of royal luxury to his quest for truth and final enlightenment as the Buddha.
+      </p>
+      <p>
+        Through a rich blend of drama, music and dance, the production explores the timeless themes of compassion, 
+        renunciation, suffering and inner peace. It remains deeply relevant in today’s world, offering audiences 
+        a moving experience of Buddha’s message of empathy, balance and equanimity.
+      </p>
+      <div class="highlight">
+        The production has been performed across India (including Bodh Gaya) and internationally, and continues to inspire audiences with its powerful storytelling and artistic excellence.
+      </div>
+    </div>
+
+    <!-- CREATIVE TEAM -->
+    <div class="section">
+      <h2>Creative Team</h2>
+      <p>
+        <strong>Directed & Scripted by:</strong><br>
+        Lushin Dubey & Bubbles Sabharwal
+      </p>
+      <p style="margin-top: 12px;">
+        <strong>Presented by:</strong><br>
+        Theatre World
+      </p>
+    </div>
+
+    <!-- ORGANISERS -->
+    <div class="section">
+      <h2>Joint Organisers</h2>
+      <ul>
+        <li><strong>The Salwan Education Trust</strong></li>
+        <li><strong>Nanhi Chhaan Foundation</strong></li>
+      </ul>
+    </div>
+
+    <!-- VENUE NOTE -->
+    <div class="section">
+      <h2>Venue</h2>
+      <p>
+        <strong>Kamani Auditorium</strong><br>
+        1, Copernicus Marg, Mandi House, New Delhi – 110001
+      </p>
+      <p style="margin-top: 10px; color: var(--text-light); font-size: 0.95rem;">
+        One of Delhi’s most prestigious performance venues, located in the cultural hub of Mandi House.
+      </p>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+
+</body>
+</html>
